@@ -33,11 +33,15 @@ grails.project.dependency.resolution = {
 	}
 
 	dependencies {
+		test 'org.spockframework:spock-grails-support:0.7-groovy-2.0'
 	}
 
 	plugins {
 		runtime ":hibernate:$grailsVersion"
 		build ":tomcat:$grailsVersion"
+		test ':spock:0.7', {
+			exclude "spock-grails-support"
+		}
 	}
 }
 
