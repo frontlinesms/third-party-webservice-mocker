@@ -1,5 +1,7 @@
 #!/bin/bash
 
+pushd wsmocker
+
 localPort=$1
 log "Running WSMocker on port: $localPort"
 
