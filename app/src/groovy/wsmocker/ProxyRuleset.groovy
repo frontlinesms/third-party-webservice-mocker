@@ -13,13 +13,15 @@ class ProxyRuleset {
 	private Closure getPathHandler(request) {
 		def domainHandler = getDomainHandler(request)
 		if(domainHandler) {
-			def requestHandler = domainHandler.getHandler(request)
-			if(requestHandler) return requestHandler
+			domainHandler.getHandler(request)
 		}
 	}
 	def handle(request, response) {
 		def domainHandler = getDomainHandler(request)
-		new RequestHandlerContext(domainHandler.options, getPathHandler(request), response).handle()
+		if(!domainHandler) throw new NoProxyActionDefinedException()
+		def handler = domainHandler.getHandler(request)
+		if(!handler) throw new NoProxyActionDefinedException()
+		new RequestHandlerContext(domainHandler.options, handler, response).handle()
 	}
 }
 

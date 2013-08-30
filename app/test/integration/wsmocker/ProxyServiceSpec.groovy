@@ -3,11 +3,11 @@ package wsmocker
 import grails.plugin.spock.*
 import spock.lang.*
 
-class ProxyConfigServiceSpec extends IntegrationSpec {
+class ProxyServiceSpec extends IntegrationSpec {
 	def service
 
 	def setup() {
-		service = new ProxyConfigService()
+		service = new ProxyService()
 	}
 
 	def 'can load config from a file'() {
@@ -15,7 +15,7 @@ class ProxyConfigServiceSpec extends IntegrationSpec {
 			def request = [properties:[serverName:'example.com']]
 			def response = [:]
 		when:
-			service.loadConfigFromFile('test/integration/data/ProxyConfigServiceSpec_basic.groovy')
+			service.loadConfig('test/integration/data/ProxyServiceSpec_basic.groovy')
 		then:
 			service.handle(request, response) == 'OK'
 	}

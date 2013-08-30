@@ -89,5 +89,19 @@ class ProxyDomainRuleParserSpec extends IntegrationSpec {
 		then:
 			responseBody == '{"credit":99}'
 	}
+
+	def 'handling unmatched request domain should throw an exception'() {
+		when:
+			ruleset.handle(mockRequest('invented.org', 'anything'), mockResponse())
+		then:
+			thrown(NoProxyActionDefinedException)
+	}
+
+	def 'handling unmatched request path should throw an exception'() {
+		when:
+			ruleset.handle(mockRequest('dumb.website', 'anything'), mockResponse())
+		then:
+			thrown(NoProxyActionDefinedException)
+	}
 }
 
