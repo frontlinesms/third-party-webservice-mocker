@@ -19,8 +19,6 @@ To run a Java app using WSMocker in place of 3rd party services, add the followi
 
 ## in progress
 
-* loading of config file at startup
-
 ## TODO
 
 * loading of config file via grails remote-control
@@ -28,4 +26,6 @@ To run a Java app using WSMocker in place of 3rd party services, add the followi
 * package as a JAR with jetty embedded
 
 ## 0.1
+
+* loading of config file at startup
 

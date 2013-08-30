@@ -3,7 +3,8 @@
 pushd wsmocker
 
 localPort=$1
-log "Running WSMocker on port: $localPort"
+configFile=$2
+log "Running WSMocker on port: $localPort with config file: $configFile"
 
-grails run-app -Dserver.port=$localPort -Duse.root.context.path=true
+grails run-app -Dserver.port=$localPort -Duse.root.context.path=true -Dwsmocker.config=$configFile
 
