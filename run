@@ -1,0 +1,7 @@
+#!/bin/bash
+
+localPort=$1
+log "Running WSMocker on port: $localPort"
+
+grails run-app -Dserver.port=$localPort -Duse.root.context.path=true
+
