@@ -1,0 +1,3 @@
+language: groovy
+script: 'cd app && ../wrapper/grailsw refresh-dependencies && ../wrapper/grailsw test-app unit: integration:'
+
