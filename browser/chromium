@@ -9,5 +9,5 @@ function log {
 
 log "Starting chromium with proxy: $proxyAddress..."
 
-chromium --proxy-server=$proxyAddress
+chromium-browser --proxy-server=$proxyAddress
 
