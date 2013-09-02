@@ -21,13 +21,12 @@ To run a Java app using WSMocker in place of 3rd party services, add the followi
 
 ## TODO
 
-* make proxy controller to carry out configured rules
-* add URL mappings so all requests are given to the proxy controller
 * grails plugin to provide launching and shutdown from _Events.groovy
 * package as a JAR with jetty embedded
 
 ## 0.1
 
+* enabled the proxy controller, so the tool is now functional!
 * loading of config file at startup
 * loading of config file via grails remote-control
 
