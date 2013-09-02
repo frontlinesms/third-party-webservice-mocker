@@ -19,9 +19,9 @@ To run a Java app using WSMocker in place of 3rd party services, add the followi
 
 ## in progress
 
-## TODO
-
 * grails plugin to provide launching and shutdown from _Events.groovy
+
+## TODO
 
 ## 0.1
 
