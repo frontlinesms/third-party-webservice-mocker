@@ -45,6 +45,7 @@ grails.project.dependency.resolution = {
 		}
 		test ':geb:0.9.0'
 		compile ':remote-control:1.4'
+		build ':standalone:1.2.1'
 	}
 }
 

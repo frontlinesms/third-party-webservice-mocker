@@ -1,0 +1,11 @@
+#!/bin/bash
+source lib/util
+
+pushd app
+
+binDir=../bin
+rm -rf $binDir
+mkdir -p $binDir
+
+grails prod build-standalone --jetty $binDir/wsmocker.jar
+

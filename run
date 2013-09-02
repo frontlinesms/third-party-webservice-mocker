@@ -1,10 +1,7 @@
 #!/bin/bash
+source lib/util
 
 pushd app
-
-function log {
-	echo "# $@"
-}
 
 localPort=$1
 configFile=$2

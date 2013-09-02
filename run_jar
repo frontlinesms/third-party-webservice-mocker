@@ -1,0 +1,16 @@
+#!/bin/bash
+source lib/util
+
+localPort=$1
+configFile=$2
+jarFile=bin/wsmocker.jar
+
+if [[ ! -f $jarFile ]]; then
+	log "JAR not found.  Building now..."
+	./build
+fi
+
+log "Running WSMocker on port: $localPort with config file: $configFile"
+
+java -Dwsmocker.config=$configFile -jar $jarFile port=$localPort
+
