@@ -1,6 +1,10 @@
 #!/bin/bash
 
-pushd wsmocker
+pushd app
+
+function log {
+	echo "# $@"
+}
 
 localPort=$1
 configFile=$2
