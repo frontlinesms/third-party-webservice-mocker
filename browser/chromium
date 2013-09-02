@@ -1,0 +1,13 @@
+#!/bin/bash
+
+proxyPort=$1
+proxyAddress=http://localhost:$proxyPort
+
+function log {
+	echo "# $@"
+}
+
+log "Starting chromium with proxy: $proxyAddress..."
+
+chromium --proxy-server=$proxyAddress
+
