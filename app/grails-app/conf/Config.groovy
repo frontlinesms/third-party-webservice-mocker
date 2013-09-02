@@ -92,3 +92,10 @@ log4j = {
 
 remoteControl.enabled=true
 
+grails.app.context = '/'
+environments {
+	test {
+		grails.app.context = 'wsmocker'
+	}
+}
+
