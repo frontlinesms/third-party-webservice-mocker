@@ -10,5 +10,5 @@ localPort=$1
 configFile=$2
 log "Running WSMocker on port: $localPort with config file: $configFile"
 
-grails run-app -Dserver.port=$localPort -Duse.root.context.path=true -Dwsmocker.config=$configFile
+grails -Dserver.port=$localPort -Dwsmocker.config=$configFile run-app
 
