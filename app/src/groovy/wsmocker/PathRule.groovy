@@ -11,8 +11,10 @@ class PathRule {
 		handler = args[-1]
 	}
 	boolean matches(request) {
-		def matches = pathMatcher == '**' || request.properties.forwardURI[1..-1] == pathMatcher
-		return matches
+		def path = request.properties.forwardURI
+		return pathMatcher == '**' ||
+				(pathMatcher == '/' && (path == '/' || path == '')) ||
+				path[1..-1] == pathMatcher
 	}
 	Closure getHandler() { handler }
 }

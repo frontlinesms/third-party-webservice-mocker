@@ -27,6 +27,10 @@ class ProxyDomainRuleParserSpec extends IntegrationSpec {
 			'dumb.website' {
 				'index.html' { '<html></html>' }
 			}
+
+			'myplace.com' {
+				'/' { 'Welcome home' }
+			}
 		}
 	}
 
@@ -36,6 +40,14 @@ class ProxyDomainRuleParserSpec extends IntegrationSpec {
 
 	private mockResponse() {
 		[:]
+	}
+
+	@Unroll
+	def 'empty path definition should be legal'() {
+		expect:
+			ruleset.getPathHandler(mockRequest('myplace.com', path))
+		where:
+			path << ['', '/']
 	}
 
 	def 'check for expected domain rules'() {
