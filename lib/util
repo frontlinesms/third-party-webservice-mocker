@@ -1,6 +1,7 @@
 #!/bin/bash
 set -e
 
+appName=wsmocker
 function log {
 	echo "# $@"
 }

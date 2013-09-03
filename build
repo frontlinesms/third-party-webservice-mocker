@@ -2,10 +2,22 @@
 source lib/util
 
 pushd app
+version=$(grep app\.version application.properties | cut -d= -f2)
 
 binDir=../bin
 rm -rf $binDir
 mkdir -p $binDir
 
-grails prod build-standalone --jetty $binDir/wsmocker.jar
+jar=$binDir/$appName-$version.jar
+grails prod build-standalone --jetty $jar
+
+log Deploying to local ivy cache...
+ivyDir=~/.grails/ivy-cache/net.frontlinesms.test/$appName/jars
+mkdir -p $ivyDir
+cp $jar $ivyDir/
+
+log Deploying to local maven repo...
+mavenDir=~/.m2/repository/net/frontlinesms/test/$appName/$version/
+mkdir -p $mavenDir
+cp $jar $mavenDir
 
