@@ -1,14 +1,14 @@
 target(name:'installWsmockerLib') {
 	final String libName = 'wsmocker'
 	final String libDirPath = "lib/${libName}"
-	final File libDir = new File(baseDir, libDirPath)
+	final File libDir = new File(libDirPath)
 	final String version = '0.1-SNAPSHOT'
 	final String requiredJar = "${libName}-${version}"
 	final String artefactDescription = "net.frontlinesms.test:${libName}:${version}"
 
 	def f = new File(libDir, requiredJar)
 	if(!f.exists()) {
-		new File(libDir).mkdirs()
+		libDir.mkdirs()
 		new File(libDir, '.gitignore').text = '/*'
 
 		def proc = "grails --stacktrace install-dependency ${artefactDescription} --dir=${libDir}".execute()
