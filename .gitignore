@@ -1,3 +1,4 @@
 /app/target/
 /bin/
+*.h2.db
 
