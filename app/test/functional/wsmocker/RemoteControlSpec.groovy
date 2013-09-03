@@ -11,11 +11,7 @@ class RemoteControlSpec extends GebReportingSpec {
 	def 'test that normal remote works ok'() {
 		expect: 'A class only availabel in the main app is accessible when using remote control.'
 			remote.exec {
-				println "app = $app"
-				println "app.meta = $app.applicationMeta"
-				println "ctx = $ctx"
-				println "ctx.properties = $ctx.properties"
-				wsmocker.TestObject.OK
+				wsmocker.TestObject.OK && app.applicationMeta['app.name'] == 'wsmocker'
 			} == true
 	}
 
