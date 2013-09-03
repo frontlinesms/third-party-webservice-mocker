@@ -6,8 +6,16 @@ eventTestPhaseStart = { phaseName ->
 		final String libName = 'wsmocker'
 		final String version = '0.1-SNAPSHOT'
 		final String libDirPath = "lib/${libName}"
+		def appPort = System.getProperty('server.port', '8080')
 		def port = System.getProperty('wsmocker.server.port',
-				(System.getProperty('server.port', '8080').toInteger() + 1).toString())
+				(appPort.toInteger() + 1).toString())
+		System.properties['wsmocker.server.port'] = port
+		System.properties['http.proxyHost'] = 'localhost'
+		System.properties['http.proxyPort'] = port
+
+		def baseUrl = System.properties[grails.util.BuildSettings.FUNCTIONAL_BASE_URL_PROPERTY]?: "http://localhost:${appPort}"
+		def baseHost = baseUrl.toURL().host
+		System.properties['http.nonProxyHosts'] = baseHost
 		try {
 			proxyProcess = "java -jar ${libDirPath}/${libName}-${version}.jar port=$port".execute()
 		} catch(Exception ex) {

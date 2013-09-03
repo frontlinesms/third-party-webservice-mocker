@@ -6,7 +6,7 @@ import groovyx.remote.transport.http.HttpTransport
 class WsmockerTestUtils {
 	/** The domain of this address is not important, as we're running through
 	 * the proxy and it will ignore any reference to grails-remote-control */
-	private static final String REMOTE_ADDR = 'http://wherever/grails-remote-control'
+	private static final String REMOTE_ADDR = "http://localhost:${System.properties['wsmocker.server.port']}/grails-remote-control"
 
 	@Lazy static remoteControl = new RemoteControl(new HttpTransport(REMOTE_ADDR))
 
