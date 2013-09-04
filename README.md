@@ -15,15 +15,33 @@ To run a Java app using WSMocker in place of 3rd party services, add the followi
 
 	-Dhttp.proxyHost=localhost -Dhttp.proxyPort=$portNumber
 
+# grails plugin
+
+## installation
+
+Add the following to grails-app/conf/BuildConfig.groovy:
+
+	test ":wsmocker:${version}"
+
+To configure the server for a particular test
+
+	wsmocker.WsmockerTestUtils.remote {
+		ctx.proxyService.loadConfig {
+			'example.com' {
+				'**' { 'OK' }
+			}
+		}
+	}
+
 # Release Notes
 
 ## in progress
 
-* grails plugin to provide launching and shutdown from _Events.groovy
-
 ## TODO
 
 * add support for wilcards in domain names
+* reset server config at the start of each test file or test (probably the latter, except for stepwise specs?)
+* simplify WsmockerTestUtils so that end-user reference to `ctx.proxyService.loadConfig` and nested closure is not required
 
 ## 0.1
 
