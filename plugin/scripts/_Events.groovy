@@ -7,17 +7,24 @@ eventTestPhaseStart = { phaseName ->
 		final String version = '0.1-SNAPSHOT'
 		final String libDirPath = "lib/${libName}"
 		def appPort = System.getProperty('server.port', '8080')
-		def port = System.getProperty('wsmocker.server.port',
+
+		def httpProxyPort = System.getProperty('wsmocker.server.port',
 				(appPort.toInteger() + 1).toString())
-		System.properties['wsmocker.server.port'] = port
+		System.properties['wsmocker.server.port'] = httpProxyPort
 		System.properties['http.proxyHost'] = 'localhost'
-		System.properties['http.proxyPort'] = port
+		System.properties['http.proxyPort'] = httpProxyPort
+
+		def httpsProxyPort = System.getProperty('wsmocker.server.port.https',
+				(appPort.toInteger() + 2).toString())
+		System.properties['wsmocker.server.port.https'] = httpsProxyPort
+		System.properties['https.proxyHost'] = 'localhost'
+		System.properties['https.proxyPort'] = httpsProxyPort
 
 		def baseUrl = System.properties[grails.util.BuildSettings.FUNCTIONAL_BASE_URL_PROPERTY]?: "http://localhost:${appPort}"
 		def baseHost = baseUrl.toURL().host
 		System.properties['http.nonProxyHosts'] = baseHost
 		try {
-			proxyProcess = "java -jar ${libDirPath}/${libName}-${version}.jar port=$port".execute()
+			proxyProcess = "java -jar ${libDirPath}/${libName}-${version}.jar port=$httpProxyPort httpsPort=$httpsProxyPort".execute()
 		} catch(Exception ex) {
 			ex.printStackTrace()
 			exit 100
