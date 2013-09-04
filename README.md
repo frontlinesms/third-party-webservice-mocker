@@ -42,10 +42,20 @@ To configure the server for a particular test
 * add support for wilcards in domain names
 * reset server config at the start of each test file or test (probably the latter, except for stepwise specs?)
 * simplify WsmockerTestUtils so that end-user reference to `ctx.proxyService.loadConfig` and nested closure is not required
+* different rules for HTTP and HTTPS, e.g.
+
+	'secure.example.com'(allowProtocol:'https') { ...rules... }
+	'insecure.example.com'(restrictProtocol:'https') { ...rules... }
+
+or perhaps
+
+	'https://secure.example.com' { ...rules... }
+	'http://insecure.example.com' { ...rules... }
 
 ## 0.1
 
 * grails plugin which automatically configures proxy and runs it for integration and functional tests
+* HTTPS support for grails plugin
 * package as a JAR with jetty embedded
 * enabled the proxy controller, so the tool is now functional!
 * loading of config file at startup
