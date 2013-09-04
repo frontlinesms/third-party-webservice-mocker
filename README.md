@@ -23,8 +23,11 @@ To run a Java app using WSMocker in place of 3rd party services, add the followi
 
 ## TODO
 
+* add support for wilcards in domain names
+
 ## 0.1
 
+* grails plugin which automatically configures proxy and runs it for integration and functional tests
 * package as a JAR with jetty embedded
 * enabled the proxy controller, so the tool is now functional!
 * loading of config file at startup
