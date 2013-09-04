@@ -30,3 +30,7 @@ To run a Java app using WSMocker in place of 3rd party services, add the followi
 * loading of config file at startup
 * loading of config file via grails remote-control
 
+### known issues
+
+* jetty sometimes fails to shutdown at the end of testing
+
