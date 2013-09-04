@@ -25,7 +25,8 @@ grails.project.dependency.resolution = {
 			exclude "spock-grails-support"
 		}
 		test ':tomcat:2.2.3'
-		runtime ':hibernate:2.2.3'
+		test ':hibernate:2.2.3'
+		runtime ':remote-control:1.4'
 	}
 }
 
