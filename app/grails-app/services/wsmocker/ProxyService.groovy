@@ -5,6 +5,7 @@ class ProxyService {
 	private ruleset
 
 	def handle(request, response) {
+		log.info "Handling request: ${request.properties.forwardURI}"
 		synchronized(__LOCK__) {
 			if(!ruleset) throw new IllegalStateException('No ruleset has been loaded for proxy service.')
 			ruleset.handle(request, response)
