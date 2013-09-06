@@ -5,7 +5,15 @@ pushd app
 
 localPort=$1
 configFile=$2
-log "Running WSMocker on port: $localPort with config file: $configFile"
+httpsPort=$3
+log "Running WSMocker on port: $localPort, https port: $httpsPort;  with config file: $configFile"
 
-grails -Dserver.port=$localPort -Dwsmocker.config=$configFile run-app
+httpsOption=''
+if [[ -n $httpsPort ]]; then
+	httpsOption="-https -Dgrails.server.port.https=$httpsPort"
+fi
+grailsCommand="grails -Dserver.port=$localPort $httpsOption -Dwsmocker.config=$configFile run-app"
+log "Executing grails command:"
+log "    $grailsCommand"
+$grailsCommand
 
