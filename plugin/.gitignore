@@ -1,6 +1,8 @@
 /target/
 /*.zip
+/*.pom
 plugin.xml
+
 
 # Not sure what this is for - not useful but keeps regenerating
 web-app/
