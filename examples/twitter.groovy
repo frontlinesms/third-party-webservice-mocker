@@ -1,13 +1,12 @@
-'api.twitter.com' {
-	'**' {
-		json([error:'No action defined'])
+'api.twitter.com'(defaultFormat:'json') {
+	def lastId = 0
+	def tweets = [:]
+	GET('1.1/statuses/show/:id') {
+		tweets.find { it.id == id }
 	}
-	def tweetz = [[id:1, content:'hello'], [id:2, content:'nonsense']]
-	tweets {
-		json(tweets)
-	}
-	'new' {
-		tweets << [content:'newly generated tweet']
+	POST('1.1/statuses/update') {
+		tweets << [id:(++lastId as String), text:params.status]
+		[id:lastId]
 	}
 }
 
