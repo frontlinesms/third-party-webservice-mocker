@@ -55,15 +55,26 @@ class ProxyDomainRuleParserSpec extends IntegrationSpec {
 				}
 				'**' { 'error' }
 			}
+
+			'params.com' {
+				'**' {
+					params.xyz
+				}
+			}
 		}
 	}
 
-	private mockRequest(domain, path, method='GET') {
-		[properties:[serverName:domain, forwardURI:path], method:method]
+	private mockRequest(domain, path, method='GET', Map params=[:]) {
+		[properties:[serverName:domain, forwardURI:path], method:method, params:params]
 	}
 
 	private mockResponse() {
 		[:]
+	}
+
+	def 'params should be available from the request'() {
+		expect:
+			ruleset.handle(mockRequest('params.com', '/', 'GET', [xyz:'123']), mockResponse()) == '123'
 	}
 
 	@Unroll

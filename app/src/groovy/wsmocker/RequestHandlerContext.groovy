@@ -20,7 +20,10 @@ class RequestHandlerContext {
 	}
 
 	def propertyMissing(propertyName) {
-		'extract property from the request URL'
+		if(propertyName == 'params') {
+			return request.params
+		}
+
 		def m = pathMatcher =~ /(.*):$propertyName(\/.*)?/
 		if(m.matches()) {
 			def v = request.properties.forwardURI[1..-1] - m[0][1]
