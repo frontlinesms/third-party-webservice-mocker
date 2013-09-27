@@ -19,9 +19,9 @@ class ProxyRuleset {
 	def handle(request, response) {
 		def domainHandler = getDomainHandler(request)
 		if(!domainHandler) throw new NoProxyActionDefinedException()
-		def handler = domainHandler.getHandler(request)
-		if(!handler) throw new NoProxyActionDefinedException()
-		new RequestHandlerContext(domainHandler.options, handler, response).handle()
+		def rule = domainHandler.getRule(request)
+		if(!rule) throw new NoProxyActionDefinedException()
+		new RequestHandlerContext(request, domainHandler.options, rule.pathMatcher, rule.handler, response).handle()
 	}
 }
 

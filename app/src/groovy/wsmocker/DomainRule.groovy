@@ -13,10 +13,13 @@ class DomainRule {
 		request.properties.serverName == domain
 	}
 	Closure getHandler(request) {
+		getRule(request)?.handler
+	}
+	PathRule getRule(request) {
 		assert this.matches(request)
 		for(h in handlers) {
 			if(h.matches(request)) {
-				return h.handler
+				return h
 			}
 		}
 	}

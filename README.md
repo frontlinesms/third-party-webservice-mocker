@@ -53,12 +53,6 @@ or perhaps
 	'https://secure.example.com' { ...rules... }
 	'http://insecure.example.com' { ...rules... }
 
-* allow more restful API definitions, e.g.
-
-	GET contact/:id
-	PUT contact
-	GET contacts
-
 ## 0.1
 
 * grails plugin which automatically configures proxy and runs it for integration and functional tests
@@ -67,6 +61,11 @@ or perhaps
 * enabled the proxy controller, so the tool is now functional!
 * loading of config file at startup
 * loading of config file via grails remote-control
+* allow more restful API definitions, e.g.
+
+	GET contact/:id
+	PUT contact
+	GET contacts
 
 ### known issues
 

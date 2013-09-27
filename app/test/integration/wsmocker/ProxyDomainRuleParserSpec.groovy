@@ -4,24 +4,29 @@ import grails.plugin.spock.*
 import spock.lang.*
 
 class ProxyDomainRuleParserSpec extends IntegrationSpec {
+	private static final String PUT = 'PUT'
+	private static final String POST = 'POST'
+	private static final String GET = 'GET'
+	private static final String DELETE = 'DELETE'
+
 	def ruleset
 	def setup() {
 		ruleset = new ProxyDomainRuleParser().parse {
 			'api.clickatell.com'(defaultFormat:'json') {
-					def remainingCredit = 100
-					'credit' { [credit:remainingCredit] }
-					'send' {
-							if(remainingCredit--) [status:'OK']
-							else [ERROR:102]
-					}
-					'**' { error(404, json([ERROR:101])) }
+				def remainingCredit = 100
+				'credit' { [credit:remainingCredit] }
+				'send' {
+						if(remainingCredit--) [status:'OK']
+						else [ERROR:102]
+				}
+				'**' { error(404, json([ERROR:101])) }
 			}
 
 			'integration.nexmo.com' {
-					'credit' { '100' }
-					'sms' { json(["SMS SENT OK"]) }
-					'secret' { error(401, json([ERROR:'Restricted Zone'])) }
-					'**' { error 404 }
+				'credit' { '100' }
+				'sms' { json(["SMS SENT OK"]) }
+				'secret' { error(401, json([ERROR:'Restricted Zone'])) }
+				'**' { error 404 }
 			}
 
 			'dumb.website' {
@@ -31,11 +36,30 @@ class ProxyDomainRuleParserSpec extends IntegrationSpec {
 			'myplace.com' {
 				'/' { 'Welcome home' }
 			}
+
+			'restland.com' {
+				GET('objects') {
+					'list'
+				}
+				POST('object') {
+					'new'
+				}
+				GET('object/:id') {
+					"get #$id"
+				}
+				DELETE('object/:id') {
+					"delete #$id"
+				}
+				PUT('object/:id') {
+					"update #$id"
+				}
+				'**' { 'error' }
+			}
 		}
 	}
 
-	private mockRequest(domain, path) {
-		[properties:[serverName:domain, forwardURI:path]]
+	private mockRequest(domain, path, method='GET') {
+		[properties:[serverName:domain, forwardURI:path], method:method]
 	}
 
 	private mockResponse() {
@@ -114,6 +138,29 @@ class ProxyDomainRuleParserSpec extends IntegrationSpec {
 			ruleset.handle(mockRequest('dumb.website', 'anything'), mockResponse())
 		then:
 			thrown(NoProxyActionDefinedException)
+	}
+
+	@Unroll
+	def 'rest responder for #method /#path'() {
+		when:
+			def responseBody = ruleset.handle(mockRequest('restland.com', "/$path", method), mockResponse())
+		then:
+			responseBody == expectedResponse
+		where:
+			path      | method | expectedResponse
+			'objects' | GET    | 'list'
+			'objects' | POST   | 'error'
+			'objects' | PUT    | 'error'
+			'objects' | DELETE | 'error'
+			'object'  | POST   | 'new'
+			'object/1'| POST   | 'error'
+			'object/1'| GET    | 'get #1'
+			'object/2'| GET    | 'get #2'
+			'object/1'| DELETE | 'delete #1'
+			'object/2'| DELETE | 'delete #2'
+			'object/1'| PUT    | 'update #1'
+			'object/2'| PUT    | 'update #2'
+			'object/1'| POST   | 'error'
 	}
 }
 
