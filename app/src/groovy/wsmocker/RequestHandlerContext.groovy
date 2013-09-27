@@ -21,7 +21,12 @@ class RequestHandlerContext {
 
 	def propertyMissing(propertyName) {
 		if(propertyName == 'params') {
-			return request.params
+			return request.parameterMap.collectEntries { k, v ->
+				if(v.size() == 1) {
+					v = v[0]
+				}
+				[(k):v]
+			}
 		}
 
 		def m = pathMatcher =~ /(.*):$propertyName(\/.*)?/
