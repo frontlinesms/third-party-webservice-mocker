@@ -39,6 +39,7 @@ To configure the server for a particular test
 
 ## TODO
 
+* allow single * as well as ** as wildcard matcher(?)
 * add support for wilcards in domain names
 * reset server config at the start of each test file or test (probably the latter, except for stepwise specs?)
 * simplify WsmockerTestUtils so that end-user reference to `ctx.proxyService.loadConfig` and nested closure is not required
@@ -51,6 +52,12 @@ or perhaps
 
 	'https://secure.example.com' { ...rules... }
 	'http://insecure.example.com' { ...rules... }
+
+* allow more restful API definitions, e.g.
+
+	GET contact/:id
+	PUT contact
+	GET contacts
 
 ## 0.1
 
