@@ -39,6 +39,7 @@ To configure the server for a particular test
 
 ## TODO
 
+* listen for changes to the config file, and reload when it changes
 * allow single * as well as ** as wildcard matcher(?)
 * add support for wilcards in domain names
 * reset server config at the start of each test file or test (probably the latter, except for stepwise specs?)
