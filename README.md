@@ -3,6 +3,76 @@ Third Party Web Service Mocker
 
 This project helps you to mock 3rd party web services to allow full testing of your apps against 3rd party APIs.
 
+# Configuration
+
+For the fullest documentation of currently supported configuration, see the [rule parser specification][1]
+
+Below is a quick overview of what is supported:
+
+## Simple proxying
+
+	'example.com' {
+		'index.html' {
+			'welcome to my simple website'
+		}
+	}
+
+## RESTful proxying
+
+	'rest.example.com' {
+		GET('objects') {
+			'a list'
+		}
+		POST('object') {
+			'a new object'
+		}
+		GET('object/:id') {
+			"show object #$id"
+		}
+		DELETE('object/:id') {
+			"delete object #$id"
+		}
+		PUT('object/:id') {
+			"update object #$id"
+		}
+		'**' { 'error' }
+	}
+
+## stateful proxying
+
+	'pay.example.com' {
+		def remainingCredit = 100
+		'credit' { "credit:${remainingCredit}" }
+		'spend' {
+				if(remainingCredit--) 'SPENT!'
+				else 'OUT OF CREDIT!'
+		}
+	}
+
+## response formats
+
+	'api.example.com'(defaultFormat:'json') {
+		'**' {
+			[a:1, b:2]
+		}
+	}
+	'example.com' {
+		'index.html' {
+			'here is some html'
+		}
+		'index.json' {
+			json(['here is some JSON'])
+		}
+	}
+
+## error handling
+
+	'empty.example.com' {
+		'**' {
+			error(404, 'page not found')
+		}
+	}
+
 # Running WSMocker
 
 Clone this git repository, and start the server:
@@ -71,4 +141,6 @@ or perhaps
 ### known issues
 
 * jetty sometimes fails to shutdown at the end of testing
+
+[1]: https://github.com/frontlinesms/third-party-webservice-mocker/blob/master/app/test/integration/wsmocker/ProxyDomainRuleParserSpec.groovy
 
